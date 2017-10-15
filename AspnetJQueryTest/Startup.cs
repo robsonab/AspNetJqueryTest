@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace AspnetJQueryTest
 {
@@ -20,6 +21,8 @@ namespace AspnetJQueryTest
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+             
+            builder.AddEnvironmentVariables();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -28,7 +31,12 @@ namespace AspnetJQueryTest
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc().AddViewOptions(options =>
+            {
+                options.HtmlHelperOptions.ClientValidationEnabled = false;
+            }).AddViewLocalization(
+                          LanguageViewLocationExpanderFormat.Suffix,
+                          opts => { opts.ResourcesPath = "Resources"; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

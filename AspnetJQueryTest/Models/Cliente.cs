@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AspnetJQueryTest.Model
+namespace AspnetJQueryTest.Models
 {
     public class Cliente
     {
